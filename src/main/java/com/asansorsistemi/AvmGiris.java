@@ -2,6 +2,7 @@ package com.asansorsistemi;
 
 import java.util.Queue;
 import java.util.Random;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,7 +33,7 @@ public class AvmGiris implements Runnable {
     }
     
     
-    public synchronized void yeniInsanEkle(Queue<Grup> kuyruk){
+    public synchronized void yeniInsanEkle(LinkedBlockingQueue<Grup> kuyruk){
         int yeniKisiSayisi = 1 + random.nextInt(10); // 1 ile 10 arası
         int hedefKat = 1 + random.nextInt(Avm.KAT_SAYISI); // 1 ile 4 arası
         
