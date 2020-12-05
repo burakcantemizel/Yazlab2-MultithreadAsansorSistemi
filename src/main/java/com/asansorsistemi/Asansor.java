@@ -28,7 +28,7 @@ public class Asansor implements Runnable {
         this.aktif = false;
         this.mod = "beklemede";
         this.mevcutKat = 0;
-        this.hedefKat = 0;
+        this.hedefKat = -1;
         this.yon = "yukari";
         this.mevcutKisiSayisi = 0;
         this.iceridekiler = Collections.synchronizedList(new ArrayList<Grup>());
@@ -44,38 +44,47 @@ public class Asansor implements Runnable {
     @Override
     public void run() {
         while (true) {
+            asansorHedefBelirle();
+            
             try{
-                 asansordenYolcuIndir();
+                asansordenYolcuIndir();
             }catch(Exception e){
                 System.out.println("Yolcu inmesinde problem!");
             }
-           
-            System.out.println("Dongu dondu");
+          
             try{
                 asansoreYolcuAl(); //Asansöre binildi.
             }catch(Exception e){
                 System.out.println("Yolcu binmesinde problem!");
             }
             
-            System.out.println("Dongu dondu1-2");
             asansorHedefBelirle();
-            System.out.println("Dongu dondu2");
-            System.out.println("Hareket");
+
             if (yon == "yukari" && mevcutKat < hedefKat) {
                 mevcutKat++;
             }
             if (yon == "asagi" && mevcutKat > hedefKat) {
                 mevcutKat--;
             }
-            System.out.println("Dongu dondu 3");
-            Thread.sleep(200);
+            
+            try {
+                   Thread.sleep(200 * AsansorSistemi.ZAMAN_CARPANI);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Asansor.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    }
+ }
 
     //Kuyrugun en basindaki tek bir grubu alıp asansöre ekler.
     public synchronized void asansoreYolcuAl(LinkedBlockingQueue kuyruk, Asansor asansor) {
         //Kuyrukta Kişi varsa asansöre yolcu alabiliriz.
-        while (asansor.mevcutKisiSayisi < Asansor.MAKSIMUM_KAPASITE) {
+        if(kuyruk.size() <= 0){
+                return;
+            
+        }
+        while (asansor.mevcutKisiSayisi < Asansor.MAKSIMUM_KAPASITE) {   
+          
+            
             if (AsansorSistemi.kuyruktakiKisiSayisi(kuyruk) > 0) {
                 Grup kuyrugunBasindaki = (Grup) kuyruk.peek();
                 int bosYer = Asansor.MAKSIMUM_KAPASITE - asansor.mevcutKisiSayisi;
@@ -105,7 +114,8 @@ public class Asansor implements Runnable {
                 if (g.hedefKat == mevcutKat) {
                     liste.add(g);
                     this.mevcutKisiSayisi -= g.kisiSayisi;
-                    this.iceridekiler.remove(g);
+                    //this.iceridekiler.remove(g);
+                    it.remove();
                 }
 
             }
@@ -120,10 +130,12 @@ public class Asansor implements Runnable {
                 Iterator<Grup> it = this.iceridekiler.iterator();
 
                 while (it.hasNext()) {
+                    Grup g = it.next();
                     if (g.hedefKat == 0) {
                         Avm.cikisYapanlar += g.kisiSayisi;
                         this.mevcutKisiSayisi -= g.kisiSayisi;
-                        this.iceridekiler.remove(g);
+                        //this.iceridekiler.remove(g);
+                        it.remove();
                     }
                 }
 
@@ -141,18 +153,21 @@ public class Asansor implements Runnable {
 
     //Bir seferlik sonraki hedefi belirledi.
     public synchronized void asansorHedefBelirle() {
-        int hedef = -1;
-
-        hedef = kattanBuyukEnKucuk();
-        if (hedef == -1) {
-            hedef = kattanKucukEnBuyuk();
+        if(this.mevcutKisiSayisi > 0){
+            int hedef = this.hedefKat;
+            
+            
+            kattanBuyukEnKucuk();
+            kattanKucukEnBuyuk();
+            
+            System.out.println("Hedef :::::::: +" + hedef);
+        }else{
+            this.hedefKat = 0;
+            this.yon = "asagi";
         }
-
-        System.out.println("Hedef :::::::: +" + hedef);
-        this.hedefKat = hedef;
     }
 
-    public synchronized int kattanBuyukEnKucuk() {
+    public synchronized void kattanBuyukEnKucuk() {
         if (this.iceridekiler.size() > 0) {
             int enKucuk = this.iceridekiler.get(0).hedefKat;
             for (Grup g : this.iceridekiler) {
@@ -161,19 +176,22 @@ public class Asansor implements Runnable {
                 }
             }
 
-            if (enKucuk >= mevcutKat) {
-                return enKucuk;
+            if (enKucuk > mevcutKat) {
+                this.yon = "yukari";
+                this.hedefKat = enKucuk;
+                return;
             } else {
                 //Asagi dogru gitmesi gerek yukarda bir hedef yok
                 this.yon = "asagi";
-                return -1;
             }
+        }else{
+            this.yon = "asagi";
+            this.hedefKat = 0;
+            return;
         }
-
-        return -1;
     }
 
-    public synchronized int kattanKucukEnBuyuk() {
+    public synchronized void kattanKucukEnBuyuk() {
         if (this.iceridekiler.size() > 0) {
             int enBuyuk = this.iceridekiler.get(0).hedefKat;
             for (Grup g : this.iceridekiler) {
@@ -182,18 +200,21 @@ public class Asansor implements Runnable {
                 }
             }
 
-            if (enBuyuk <= mevcutKat) {
+            if (enBuyuk < mevcutKat) {
                 //Yukarıda bir hedef
                 //Yukari dogru hedef belirlicem
-                return enBuyuk;
+                this.yon = "asagi";
+                this.hedefKat = enBuyuk;
+                return;
             } else {
                 //Asagi dogru gitmesi gerek yukarda bir hedef yok
                 this.yon = "yukari";
-                return -1;
             }
+        }else{
+            this.yon = "asagi";
+            this.hedefKat = 0;
+            return;
         }
-
-        return -1;
     }
 
     public synchronized void asansoreYolcuAl() {
