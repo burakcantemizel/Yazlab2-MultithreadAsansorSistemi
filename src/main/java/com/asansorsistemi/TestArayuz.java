@@ -5,7 +5,11 @@
  */
 package com.asansorsistemi;
 
+import static com.asansorsistemi.AsansorSistemi.asansor1Thread;
+import static com.asansorsistemi.AsansorSistemi.avmGirisThread;
 import static com.asansorsistemi.AsansorSistemi.testArayuzThread;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -57,31 +61,35 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
         kuyruk1bilgi = new javax.swing.JTextField();
         kuyruk2bilgi = new javax.swing.JTextField();
         kuyruk3bilgi = new javax.swing.JTextField();
-        asansor1 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         asansor1iceridekiler = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        cikisYapanlar = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        asansor1 = new javax.swing.JTextArea();
+        baslat = new javax.swing.JButton();
 
         setLayout(null);
 
         jLabel1.setText("0.kat");
         add(jLabel1);
-        jLabel1.setBounds(70, 40, 28, 16);
+        jLabel1.setBounds(48, 40, 50, 16);
 
         jLabel2.setText("1.kat");
         add(jLabel2);
-        jLabel2.setBounds(70, 70, 28, 16);
+        jLabel2.setBounds(48, 70, 50, 16);
 
         jLabel3.setText("2.kat");
         add(jLabel3);
-        jLabel3.setBounds(70, 100, 28, 16);
+        jLabel3.setBounds(48, 100, 50, 16);
 
         jLabel4.setText("3.kat");
         add(jLabel4);
-        jLabel4.setBounds(70, 130, 28, 16);
+        jLabel4.setBounds(48, 130, 50, 16);
 
         jLabel5.setText("4.kat");
         add(jLabel5);
-        jLabel5.setBounds(70, 160, 28, 16);
+        jLabel5.setBounds(48, 160, 50, 16);
 
         jLabel6.setText("Toplam");
         add(jLabel6);
@@ -134,70 +142,99 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
 
         jLabel8.setText("0.kat");
         add(jLabel8);
-        jLabel8.setBounds(70, 560, 28, 16);
+        jLabel8.setBounds(60, 590, 28, 16);
 
         jLabel9.setText("1.kat");
         add(jLabel9);
-        jLabel9.setBounds(70, 590, 28, 16);
+        jLabel9.setBounds(60, 620, 28, 16);
 
         jLabel10.setText("2.kat");
         add(jLabel10);
-        jLabel10.setBounds(70, 620, 28, 16);
+        jLabel10.setBounds(60, 650, 28, 16);
 
         jLabel11.setText("3.kat");
         add(jLabel11);
-        jLabel11.setBounds(70, 650, 28, 16);
+        jLabel11.setBounds(60, 680, 28, 16);
 
         jLabel12.setText("4.kat");
         add(jLabel12);
-        jLabel12.setBounds(70, 680, 28, 16);
+        jLabel12.setBounds(60, 710, 28, 16);
 
         kuyruk4bilgi.setText("jTextField10");
         add(kuyruk4bilgi);
-        kuyruk4bilgi.setBounds(110, 680, 960, 24);
+        kuyruk4bilgi.setBounds(100, 710, 960, 24);
 
         kuyruk0bilgi.setText("jTextField10");
         add(kuyruk0bilgi);
-        kuyruk0bilgi.setBounds(110, 560, 960, 24);
+        kuyruk0bilgi.setBounds(100, 590, 960, 24);
 
         kuyruk1bilgi.setText("jTextField10");
         add(kuyruk1bilgi);
-        kuyruk1bilgi.setBounds(110, 590, 960, 24);
+        kuyruk1bilgi.setBounds(100, 620, 960, 24);
 
         kuyruk2bilgi.setText("jTextField10");
         add(kuyruk2bilgi);
-        kuyruk2bilgi.setBounds(110, 620, 960, 24);
+        kuyruk2bilgi.setBounds(100, 650, 960, 24);
 
         kuyruk3bilgi.setText("jTextField10");
         add(kuyruk3bilgi);
-        kuyruk3bilgi.setBounds(110, 650, 960, 24);
-
-        asansor1.setText("jTextField15");
-        add(asansor1);
-        asansor1.setBounds(70, 230, 280, 170);
+        kuyruk3bilgi.setBounds(100, 680, 960, 24);
 
         jLabel13.setText("Asansor 1");
         add(jLabel13);
-        jLabel13.setBounds(70, 210, 58, 16);
+        jLabel13.setBounds(50, 230, 58, 16);
 
         asansor1iceridekiler.setText("jTextField16");
         add(asansor1iceridekiler);
-        asansor1iceridekiler.setBounds(70, 410, 1000, 24);
+        asansor1iceridekiler.setBounds(110, 420, 960, 24);
+
+        jLabel14.setText("Çıkanlar");
+        add(jLabel14);
+        jLabel14.setBounds(50, 190, 50, 20);
+
+        cikisYapanlar.setText("jTextField1");
+        add(cikisYapanlar);
+        cikisYapanlar.setBounds(110, 190, 73, 24);
+
+        asansor1.setColumns(20);
+        asansor1.setRows(5);
+        jScrollPane2.setViewportView(asansor1);
+
+        add(jScrollPane2);
+        jScrollPane2.setBounds(50, 260, 390, 140);
+
+        baslat.setText("Başlat");
+        baslat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                baslatActionPerformed(evt);
+            }
+        });
+        add(baslat);
+        baslat.setBounds(340, 40, 66, 32);
     }// </editor-fold>//GEN-END:initComponents
 
     private void kat1ToplamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kat1ToplamActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_kat1ToplamActionPerformed
 
+    private void baslatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_baslatActionPerformed
+        // TODO add your handling code here:
+        avmGirisThread.start();
+        asansor1Thread.start();
+    }//GEN-LAST:event_baslatActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField asansor1;
+    private javax.swing.JTextArea asansor1;
     private javax.swing.JTextField asansor1iceridekiler;
+    private javax.swing.JButton baslat;
+    private javax.swing.JTextField cikisYapanlar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -206,6 +243,7 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField kat0Kuyruk;
     private javax.swing.JTextField kat1Kuyruk;
     private javax.swing.JTextField kat1Toplam;
@@ -227,7 +265,11 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
        //Burasi artık arayuzu guncelliyor
        while(true){
         ekraniGuncelle();
-        Thread.sleep(10);
+           try {
+               Thread.sleep(10);
+           } catch (InterruptedException ex) {
+               System.out.println("Arayuz Thread!");
+           }
        }
         
        
@@ -256,5 +298,22 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
     
     synchronized void ekraniGuncelle(){
         kat0Kuyruk.setText(Integer.toString(AsansorSistemi.kuyruktakiKisiSayisi(Avm.zeminKatKuyruk)));
+        kat1Kuyruk.setText(Integer.toString(AsansorSistemi.kuyruktakiKisiSayisi(Avm.birinciKatKuyruk)));
+        kat2Kuyruk.setText(Integer.toString(AsansorSistemi.kuyruktakiKisiSayisi(Avm.ikinciKatKuyruk)));
+        kat3Kuyruk.setText(Integer.toString(AsansorSistemi.kuyruktakiKisiSayisi(Avm.ucuncuKatKuyruk)));
+        kat4Kuyruk.setText(Integer.toString(AsansorSistemi.kuyruktakiKisiSayisi(Avm.dorduncuKatKuyruk)));
+        cikisYapanlar.setText(Integer.toString(Avm.cikisYapanlar));
+        
+        kat1Toplam.setText(Integer.toString(AsansorSistemi.ListedekiKisiSayisi(Avm.birinciKatListe)));
+        kat2Toplam.setText(Integer.toString(AsansorSistemi.ListedekiKisiSayisi(Avm.ikinciKatListe)));
+        kat3Toplam.setText(Integer.toString(AsansorSistemi.ListedekiKisiSayisi(Avm.ucuncuKatListe)));
+        kat4Toplam.setText(Integer.toString(AsansorSistemi.ListedekiKisiSayisi(Avm.dorduncuKatListe)));
+        
+        asansor1.setText(AsansorSistemi.arayuzAsansorYazdir(AsansorSistemi.asansor1));
+        asansor1iceridekiler.setText(AsansorSistemi.arayuzAsansorIcindekiler(AsansorSistemi.asansor1.iceridekiler));
+        
+        kuyruk0bilgi.setText(AsansorSistemi.arayuzkuyrukBilgisi(Avm.zeminKatKuyruk));
+        
+        
     }
 }

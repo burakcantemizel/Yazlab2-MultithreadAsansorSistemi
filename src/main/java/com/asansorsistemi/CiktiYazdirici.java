@@ -2,6 +2,7 @@ package com.asansorsistemi;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
@@ -81,8 +82,10 @@ public class CiktiYazdirici implements Runnable {
         }
         System.out.print(" ]\n");
     }
+    
 
-    public synchronized void AsansorIcindekiler(ArrayList<Grup> iceridekiler) {
+
+    public synchronized void AsansorIcindekiler(List<Grup> iceridekiler) {
         int i = 0;
         System.out.print("[ ");
         for (Grup g : iceridekiler) {
@@ -94,5 +97,7 @@ public class CiktiYazdirici implements Runnable {
         }
         System.out.print(" ]\n");
     }
+
+   
 
 }

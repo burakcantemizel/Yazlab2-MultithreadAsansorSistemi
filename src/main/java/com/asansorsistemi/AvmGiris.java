@@ -25,7 +25,7 @@ public class AvmGiris implements Runnable {
                 
                 
                 
-                Thread.sleep(ZAMAN_ARALIGI);
+                Thread.sleep(ZAMAN_ARALIGI * AsansorSistemi.ZAMAN_CARPANI);
             } catch (InterruptedException ex) {
                 System.out.println("AvmGiris Thread Hatası!");
             }
@@ -35,7 +35,7 @@ public class AvmGiris implements Runnable {
     
     public synchronized void yeniInsanEkle(LinkedBlockingQueue<Grup> kuyruk){
         int yeniKisiSayisi = 1 + random.nextInt(10); // 1 ile 10 arası
-        int hedefKat = 1 + random.nextInt(Avm.KAT_SAYISI); // 1 ile 4 arası
+        int hedefKat =  1 + random.nextInt(Avm.KAT_SAYISI-1); // 1 ile 4 arası
         
         Grup yeniGrup = new Grup(yeniKisiSayisi, hedefKat);
         

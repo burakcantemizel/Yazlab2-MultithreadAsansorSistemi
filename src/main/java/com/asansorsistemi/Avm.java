@@ -1,7 +1,9 @@
 package com.asansorsistemi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -21,10 +23,10 @@ public class Avm {
     static LinkedBlockingQueue<Grup> ucuncuKatKuyruk = new LinkedBlockingQueue<Grup>();
     static LinkedBlockingQueue<Grup> dorduncuKatKuyruk = new LinkedBlockingQueue<Grup>();
     
-    static ArrayList<Grup> birinciKatListe = new ArrayList<Grup>();
-    static ArrayList<Grup> ikinciKatListe = new ArrayList<Grup>();
-    static ArrayList<Grup> ucuncuKatListe = new ArrayList<Grup>();
-    static ArrayList<Grup> dorduncuKatListe = new ArrayList<Grup>();
+    static List<Grup> birinciKatListe = Collections.synchronizedList(new ArrayList<Grup>());
+    static List<Grup> ikinciKatListe = Collections.synchronizedList(new ArrayList<Grup>());
+    static List<Grup> ucuncuKatListe = Collections.synchronizedList(new ArrayList<Grup>());
+    static List<Grup> dorduncuKatListe = Collections.synchronizedList(new ArrayList<Grup>());
     
     static int cikisYapanlar = 0;
     

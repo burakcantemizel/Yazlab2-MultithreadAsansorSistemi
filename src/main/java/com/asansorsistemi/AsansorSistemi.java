@@ -1,13 +1,16 @@
 package com.asansorsistemi;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.LinkedBlockingQueue;
 import javax.swing.JFrame;
 
 public class AsansorSistemi {
-
+    static int ZAMAN_CARPANI = 4;
+    
+    
     static Avm avm;
 
     static CiktiYazdirici ciktiYazdirici;
@@ -31,7 +34,7 @@ public class AsansorSistemi {
         asansor1 = new Asansor(1);
         asansor1Thread = new Thread(asansor1);
 
-        ciktiYazdirici = new CiktiYazdirici(300);
+        ciktiYazdirici = new CiktiYazdirici(300 * AsansorSistemi.ZAMAN_CARPANI);
         ciktiYazdiriciThread = new Thread(ciktiYazdirici);
         
         
@@ -54,8 +57,7 @@ public class AsansorSistemi {
         asansor1Thread.setPriority(2);
         ciktiYazdiriciThread.setPriority(10);
         
-        avmGirisThread.start();
-        asansor1Thread.start();
+
         testArayuzThread.start();
         
         //ciktiYazdiriciThread.start();
@@ -89,7 +91,7 @@ public class AsansorSistemi {
 
     }
     
-    public static synchronized int ListedekiKisiSayisi(ArrayList<Grup> liste) {
+    public static synchronized int ListedekiKisiSayisi(List<Grup> liste) {
         if (liste.size() > 0) {
             int toplamKisi = 0;
             for (Grup g : liste) {
@@ -100,6 +102,51 @@ public class AsansorSistemi {
             return 0;
         }
 
+    }
+    
+     public static synchronized String arayuzAsansorIcindekiler(List<Grup> iceridekiler) {
+        int i = 0;
+        String cikti = "";
+        cikti += "[ ";
+        for (Grup g : iceridekiler) {
+            if (i != 0) {
+                cikti += " , ";
+            }
+            i++;
+            cikti += "[" + g.kisiSayisi + "," + g.hedefKat + "]";
+        }
+        cikti += " ]\n";
+        
+        return cikti;
+    }
+
+    public static synchronized String arayuzAsansorYazdir(Asansor asansor) {
+        String cikti = "";
+        cikti += "Aktiflik : " + asansor.aktif + "\n";
+        cikti += "\tMod: " + asansor.mod + "\n";
+        cikti += "\tMevcut Kat: " + asansor.mevcutKat + "\n";
+        cikti += "\tHedef Kat: " + asansor.hedefKat + "\n";
+        cikti += "\tYön: " + asansor.yon + "\n";
+        cikti += "\tKapasite: " + Asansor.MAKSIMUM_KAPASITE + "\n";
+        cikti += "\tMevcut Kişi Sayısı :" + asansor.mevcutKisiSayisi + "\n";
+        cikti += "\tİçeridekiler : " + "\n";
+        //cikti += arayuzAsansorIcindekiler(asansor.iceridekiler);
+        return cikti;
+    }
+    
+    public static synchronized String arayuzkuyrukBilgisi(LinkedBlockingQueue<Grup> kuyruk) {
+        int i = 0;
+        String cikti = "[ ";
+        for (Grup g : kuyruk) {
+            if (i != 0) {
+                cikti += " , ";
+            }
+            i++;
+            cikti +=  "[" + g.kisiSayisi + "," + g.hedefKat + "]";
+        }
+        cikti += " ]\n";
+        
+        return cikti;
     }
 
 }
