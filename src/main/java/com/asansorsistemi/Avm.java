@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -22,11 +23,12 @@ public class Avm {
     static LinkedBlockingQueue<Grup> ikinciKatKuyruk = new LinkedBlockingQueue<Grup>();
     static LinkedBlockingQueue<Grup> ucuncuKatKuyruk = new LinkedBlockingQueue<Grup>();
     static LinkedBlockingQueue<Grup> dorduncuKatKuyruk = new LinkedBlockingQueue<Grup>();
+  
     
-    static List<Grup> birinciKatListe = Collections.synchronizedList(new ArrayList<Grup>());
-    static List<Grup> ikinciKatListe = Collections.synchronizedList(new ArrayList<Grup>());
-    static List<Grup> ucuncuKatListe = Collections.synchronizedList(new ArrayList<Grup>());
-    static List<Grup> dorduncuKatListe = Collections.synchronizedList(new ArrayList<Grup>());
+    static CopyOnWriteArrayList<Grup> birinciKatListe = new CopyOnWriteArrayList<Grup>();
+    static CopyOnWriteArrayList<Grup> ikinciKatListe = new CopyOnWriteArrayList<Grup>();
+    static CopyOnWriteArrayList<Grup> ucuncuKatListe = new CopyOnWriteArrayList<Grup>();
+    static CopyOnWriteArrayList<Grup> dorduncuKatListe = new CopyOnWriteArrayList<Grup>();
     
     static int cikisYapanlar = 0;
     

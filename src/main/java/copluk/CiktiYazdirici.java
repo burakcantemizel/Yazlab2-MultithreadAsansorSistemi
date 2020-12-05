@@ -1,3 +1,4 @@
+/*
 package com.asansorsistemi;
 
 import java.awt.BorderLayout;
@@ -101,3 +102,4 @@ public class CiktiYazdirici implements Runnable {
    
 
 }
+*/

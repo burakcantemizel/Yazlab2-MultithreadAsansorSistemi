@@ -43,61 +43,33 @@ public class Asansor implements Runnable {
 
     @Override
     public void run() {
-        boolean calis = true;
-        while (true && calis == true) {
-
-            while (this.aktif == true) {
-                //Başlangıçta içindekilere göre bir hedef belirleyecek
-
-                asansoreYolcuAl();
-                this.hedefKat = asansorHedefBelirle(); // Artık hedef kata gideceğiz ve yolcu indireceğiz
-
-                if (this.yon == "yukari") {
-                    for (int i = this.mevcutKat; i < this.hedefKat; i++) {
-                        this.mevcutKat++;
-                        //Yolcu Indirme
-                        try{
-                            asansordenYolcuIndir();
-                        }catch(Exception e){
-                            System.out.println("yolcu inemedi");
-                        }
-                        
-                        asansoreYolcuAl();
-                        this.hedefKat = asansorHedefBelirle(); // Artık hedef kata gideceğiz ve yolcu indireceğiz
-                        try {
-                            Thread.sleep(KAT_ARASI_GECIS * AsansorSistemi.ZAMAN_CARPANI);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(Asansor.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-
-                    }
-
-                    //Artık Hedef Kattayiz
-                } else if (this.yon == "asagi") {
-                    for (int i = this.mevcutKat; i > this.hedefKat; i--) {
-                        this.mevcutKat--;
-                        //YolcuIndirme
-                        try{
-                            asansordenYolcuIndir();
-                        }catch(Exception e){
-                            System.out.println("yolcu inemedi");
-                        }
-                        asansoreYolcuAl();
-                        this.hedefKat = asansorHedefBelirle(); // Artık hedef kata gideceğiz ve yolcu indireceğiz
-                        try {
-                            Thread.sleep(KAT_ARASI_GECIS * AsansorSistemi.ZAMAN_CARPANI);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(Asansor.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-
-                    //Artık Hedef Kattayiz
-                }
-
+        while (true) {
+            try{
+                 asansordenYolcuIndir();
+            }catch(Exception e){
+                System.out.println("Yolcu inmesinde problem!");
             }
-
+           
+            System.out.println("Dongu dondu");
+            try{
+                asansoreYolcuAl(); //Asansöre binildi.
+            }catch(Exception e){
+                System.out.println("Yolcu binmesinde problem!");
+            }
+            
+            System.out.println("Dongu dondu1-2");
+            asansorHedefBelirle();
+            System.out.println("Dongu dondu2");
+            System.out.println("Hareket");
+            if (yon == "yukari" && mevcutKat < hedefKat) {
+                mevcutKat++;
+            }
+            if (yon == "asagi" && mevcutKat > hedefKat) {
+                mevcutKat--;
+            }
+            System.out.println("Dongu dondu 3");
+            Thread.sleep(200);
         }
-
     }
 
     //Kuyrugun en basindaki tek bir grubu alıp asansöre ekler.
@@ -124,28 +96,18 @@ public class Asansor implements Runnable {
     }
 
     public synchronized void asansordenYolcuIndir(List<Grup> liste, Asansor asansor) {
-        //Her katta tetiklensin asansörün içinde o katta inecek birisi var ise onu indirsin
-        if (asansor.iceridekiler.size() > 0) {
-            Iterator<Grup> it = asansor.iceridekiler.iterator();
-            while(it.hasNext()){
+        //Katlardaki inme olacak
+        if (this.iceridekiler.size() > 0) {
+            Iterator<Grup> it = this.iceridekiler.iterator();
+
+            while (it.hasNext()) {
                 Grup g = it.next();
-                if (g.hedefKat == asansor.mevcutKat) {
-                    if (g.hedefKat == 0) {
-                        Avm.cikisYapanlar += g.kisiSayisi;
-                        asansor.mevcutKisiSayisi -= g.kisiSayisi;
-                        asansor.iceridekiler.remove(g);
-
-                    } else {
-                        if (liste != null) {
-                            liste.add(g);
-                        }
-                        asansor.mevcutKisiSayisi -= g.kisiSayisi;
-                        asansor.iceridekiler.remove(g);
-
-                    }
-
+                if (g.hedefKat == mevcutKat) {
+                    liste.add(g);
+                    this.mevcutKisiSayisi -= g.kisiSayisi;
+                    this.iceridekiler.remove(g);
                 }
-                
+
             }
         }
 
@@ -153,7 +115,19 @@ public class Asansor implements Runnable {
 
     public synchronized void asansordenYolcuIndir() {
         if (this.mevcutKat == 0) {
-            asansordenYolcuIndir(null, this);
+            //Özel Çıkış Komple Çıkış
+            if (this.iceridekiler.size() > 0) {
+                Iterator<Grup> it = this.iceridekiler.iterator();
+
+                while (it.hasNext()) {
+                    if (g.hedefKat == 0) {
+                        Avm.cikisYapanlar += g.kisiSayisi;
+                        this.mevcutKisiSayisi -= g.kisiSayisi;
+                        this.iceridekiler.remove(g);
+                    }
+                }
+
+            }
         } else if (this.mevcutKat == 1) {
             asansordenYolcuIndir(Avm.birinciKatListe, this);
         } else if (this.mevcutKat == 2) {
@@ -166,56 +140,60 @@ public class Asansor implements Runnable {
     }
 
     //Bir seferlik sonraki hedefi belirledi.
-    public synchronized int asansorHedefBelirle() {
-        /*
-        int hedef = yukariHedefBelirle();
-        
-        if(hedef == this.mevcutKat) asagiHedefBelirle();
-        
-        return hedef;
-        */
+    public synchronized void asansorHedefBelirle() {
         int hedef = -1;
-        
-        if(this.iceridekiler != null && this.iceridekiler.size() > 0){
-             hedef = this.iceridekiler.get(0).hedefKat;
-        }   
-        return hedef;
-        
+
+        hedef = kattanBuyukEnKucuk();
+        if (hedef == -1) {
+            hedef = kattanKucukEnBuyuk();
+        }
+
+        System.out.println("Hedef :::::::: +" + hedef);
+        this.hedefKat = hedef;
     }
 
-    public synchronized int yukariHedefBelirle() {
-        int enKucuk = this.iceridekiler.get(0).hedefKat;
-        for (Grup g : this.iceridekiler) {
-            if (enKucuk >= g.hedefKat) {
-                enKucuk = g.hedefKat;
+    public synchronized int kattanBuyukEnKucuk() {
+        if (this.iceridekiler.size() > 0) {
+            int enKucuk = this.iceridekiler.get(0).hedefKat;
+            for (Grup g : this.iceridekiler) {
+                if (enKucuk >= g.hedefKat) {
+                    enKucuk = g.hedefKat;
+                }
+            }
+
+            if (enKucuk >= mevcutKat) {
+                return enKucuk;
+            } else {
+                //Asagi dogru gitmesi gerek yukarda bir hedef yok
+                this.yon = "asagi";
+                return -1;
             }
         }
 
-        if (mevcutKat < enKucuk) { //Yukari dogru enKucuk Kata gidicem
-            System.out.println("Yukari dogru hedef belirlendi");
-            this.yon = "yukari";
-            return enKucuk;
-        }
-
-        return this.mevcutKat;
+        return -1;
     }
 
-    public synchronized int asagiHedefBelirle() {
-        System.out.println("Asagi dogru kontrol oldu");
-        int enBuyuk = this.iceridekiler.get(0).hedefKat;
-        for (Grup g : this.iceridekiler) {
-            if (enBuyuk <= g.hedefKat) {
-                enBuyuk = g.hedefKat;
+    public synchronized int kattanKucukEnBuyuk() {
+        if (this.iceridekiler.size() > 0) {
+            int enBuyuk = this.iceridekiler.get(0).hedefKat;
+            for (Grup g : this.iceridekiler) {
+                if (enBuyuk <= g.hedefKat) {
+                    enBuyuk = g.hedefKat;
+                }
+            }
+
+            if (enBuyuk <= mevcutKat) {
+                //Yukarıda bir hedef
+                //Yukari dogru hedef belirlicem
+                return enBuyuk;
+            } else {
+                //Asagi dogru gitmesi gerek yukarda bir hedef yok
+                this.yon = "yukari";
+                return -1;
             }
         }
 
-        if (mevcutKat >= enBuyuk) {
-            System.out.println("asagi dogru hedef belirlendi");
-            this.yon = "asagi";
-            return enBuyuk;
-        }
-
-        return this.mevcutKat;
+        return -1;
     }
 
     public synchronized void asansoreYolcuAl() {
@@ -232,46 +210,4 @@ public class Asansor implements Runnable {
         }
     }
 
-    /*
-    HURDALIK
-    
-           if (this.yon == "yukari" && this.iceridekiler.size() > 1) {
-            //iceridekilerden en kucuk olan bir sonraki hedefim
-            int enKucuk = this.iceridekiler.get(0).hedefKat;
-            for (Grup g : this.iceridekiler) {
-                if (enKucuk >= g.hedefKat) {
-                    enKucuk = g.hedefKat;
-                }
-            }
-            //Burdan sonra enKucukIcerdeki bulundu.
-            if(mevcutKat <= enKucuk){ //Yukari dogru enKucuk Kata gidicem
-                System.out.println("Yukari dogru hedef belirlendi");
-                this.yon = "yukari";
-                return enKucuk;
-                
-            }else{
-                this.yon = "asagi";
-                asansorHedefBelirle();
-            }
-        } else if (this.yon == "asagi" && this.iceridekiler.size() > 1) {
-            //iceridekilerden en buyuk olan bir sonraki hedefim
-            int enBuyuk = this.iceridekiler.get(0).hedefKat;
-            for (Grup g : this.iceridekiler) {
-                if (enBuyuk <= g.hedefKat) {
-                    enBuyuk = g.hedefKat;
-                }
-            }
-            //Burdan sonra enBuyuk Kat bulundu
-            if(mevcutKat >= enBuyuk){
-                 System.out.println("asagi dogru hedef belirlendi");
-                 this.yon = "asagi";
-                return enBuyuk;
-            }else{
-                this.yon = "yukari";
-                asansorHedefBelirle();
-            }
-        }
-        
-        return this.mevcutKat;
-     */
 }

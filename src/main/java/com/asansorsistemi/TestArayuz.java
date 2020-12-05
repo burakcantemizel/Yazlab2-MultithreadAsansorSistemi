@@ -8,6 +8,8 @@ package com.asansorsistemi;
 import static com.asansorsistemi.AsansorSistemi.asansor1Thread;
 import static com.asansorsistemi.AsansorSistemi.avmGirisThread;
 import static com.asansorsistemi.AsansorSistemi.testArayuzThread;
+import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -271,29 +273,6 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
                System.out.println("Arayuz Thread!");
            }
        }
-        
-       
-        /*
-        System.out.println("1. kat : Kattaki: " + AsansorSistemi.ListedekiKisiSayisi(Avm.birinciKatListe) + " kuyruk : " + AsansorSistemi.kuyruktakiKisiSayisi(Avm.birinciKatKuyruk));
-        System.out.println("2. kat : Kattaki: " + AsansorSistemi.ListedekiKisiSayisi(Avm.ikinciKatListe) + " kuyruk : " + AsansorSistemi.kuyruktakiKisiSayisi(Avm.ikinciKatKuyruk));
-        System.out.println("3. kat : Kattaki: " + AsansorSistemi.ListedekiKisiSayisi(Avm.ucuncuKatListe) + " kuyruk : " + AsansorSistemi.kuyruktakiKisiSayisi(Avm.ucuncuKatKuyruk));
-        System.out.println("4. kat : Kattaki: " + AsansorSistemi.ListedekiKisiSayisi(Avm.dorduncuKatListe) + " kuyruk : " + AsansorSistemi.kuyruktakiKisiSayisi(Avm.dorduncuKatKuyruk));
-        System.out.println("Cikis yapanlar : " + Avm.cikisYapanlar);
-
-        System.out.println();
-        AsansorYazdir(AsansorSistemi.asansor1);
-
-        System.out.print("0. kat : ");
-        kuyrukBilgisi(Avm.zeminKatKuyruk);
-        System.out.print("1. kat : ");
-        kuyrukBilgisi(Avm.birinciKatKuyruk);
-        System.out.print("2. kat : ");
-        kuyrukBilgisi(Avm.ikinciKatKuyruk);
-        System.out.print("3. kat : ");
-        kuyrukBilgisi(Avm.ucuncuKatKuyruk);
-        System.out.print("4. kat : ");
-        kuyrukBilgisi(Avm.dorduncuKatKuyruk);
-    */
     }
     
     synchronized void ekraniGuncelle(){
@@ -309,11 +288,55 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
         kat3Toplam.setText(Integer.toString(AsansorSistemi.ListedekiKisiSayisi(Avm.ucuncuKatListe)));
         kat4Toplam.setText(Integer.toString(AsansorSistemi.ListedekiKisiSayisi(Avm.dorduncuKatListe)));
         
-        asansor1.setText(AsansorSistemi.arayuzAsansorYazdir(AsansorSistemi.asansor1));
-        asansor1iceridekiler.setText(AsansorSistemi.arayuzAsansorIcindekiler(AsansorSistemi.asansor1.iceridekiler));
+        asansor1.setText(arayuzAsansorYazdir(AsansorSistemi.asansor1));
+        asansor1iceridekiler.setText(arayuzAsansorIcindekiler(AsansorSistemi.asansor1.iceridekiler));
         
-        kuyruk0bilgi.setText(AsansorSistemi.arayuzkuyrukBilgisi(Avm.zeminKatKuyruk));
+        kuyruk0bilgi.setText(arayuzkuyrukBilgisi(Avm.zeminKatKuyruk));
         
         
+    }
+    
+    public static synchronized String arayuzAsansorIcindekiler(List<Grup> iceridekiler) {
+        int i = 0;
+        String cikti = "";
+        cikti += "[ ";
+        for (Grup g : iceridekiler) {
+            if (i != 0) {
+                cikti += " , ";
+            }
+            i++;
+            cikti += "[" + g.kisiSayisi + "," + g.hedefKat + "]";
+        }
+        cikti += " ]\n";
+        
+        return cikti;
+    }
+
+    public static synchronized String arayuzAsansorYazdir(Asansor asansor) {
+        String cikti = "";
+        cikti += "Aktiflik : " + asansor.aktif + "\n";
+        cikti += "\tMod: " + asansor.mod + "\n";
+        cikti += "\tMevcut Kat: " + asansor.mevcutKat + "\n";
+        cikti += "\tHedef Kat: " + asansor.hedefKat + "\n";
+        cikti += "\tYön: " + asansor.yon + "\n";
+        cikti += "\tKapasite: " + Asansor.MAKSIMUM_KAPASITE + "\n";
+        cikti += "\tMevcut Kişi Sayısı :" + asansor.mevcutKisiSayisi + "\n";
+        cikti += "\tİçeridekiler : " + "\n";
+        return cikti;
+    }
+    
+    public static synchronized String arayuzkuyrukBilgisi(LinkedBlockingQueue<Grup> kuyruk) {
+        int i = 0;
+        String cikti = "[ ";
+        for (Grup g : kuyruk) {
+            if (i != 0) {
+                cikti += " , ";
+            }
+            i++;
+            cikti +=  "[" + g.kisiSayisi + "," + g.hedefKat + "]";
+        }
+        cikti += " ]\n";
+        
+        return cikti;
     }
 }
