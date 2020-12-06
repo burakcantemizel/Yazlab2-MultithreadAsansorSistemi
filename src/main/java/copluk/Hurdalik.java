@@ -1,7 +1,4 @@
 /*
-
-
-
 boolean calis = true;
         while (true && calis == true) {
 

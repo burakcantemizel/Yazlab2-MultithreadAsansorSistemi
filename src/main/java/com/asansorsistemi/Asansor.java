@@ -44,47 +44,67 @@ public class Asansor implements Runnable {
     @Override
     public void run() {
         while (true) {
-            asansorHedefBelirle();
             
-            try{
-                asansordenYolcuIndir();
-            }catch(Exception e){
-                System.out.println("Yolcu inmesinde problem!");
-            }
-          
-            try{
-                asansoreYolcuAl(); //Asansöre binildi.
-            }catch(Exception e){
-                System.out.println("Yolcu binmesinde problem!");
-            }
-            
-            asansorHedefBelirle();
+            if (this.aktif == true || this.mevcutKisiSayisi > 0) {
+                
+                System.out.println(this.id);
+                asansorHedefBelirle();
 
-            if (yon == "yukari" && mevcutKat < hedefKat) {
-                mevcutKat++;
-            }
-            if (yon == "asagi" && mevcutKat > hedefKat) {
-                mevcutKat--;
+                try {
+                    asansordenYolcuIndir();
+                } catch (Exception e) {
+                    System.out.println("Yolcu inmesinde problem!");
+                }
+
+                try {
+                    asansoreYolcuAl(); //Asansöre binildi.
+                } catch (Exception e) {
+                    System.out.println("Yolcu binmesinde problem!");
+                }
+
+                asansorHedefBelirle();
+
+                if (yon == "yukari" && mevcutKat < hedefKat) {
+                    mevcutKat++;
+                }
+                if (yon == "asagi" && mevcutKat > hedefKat) {
+                    mevcutKat--;
+                }
+
+                try {
+                    Thread.sleep(200 * AsansorSistemi.ZAMAN_CARPANI);
+                } catch (InterruptedException ex) {
+                    System.out.println("Kat atasi gecis thread hatasi!");
+                }
+            }{
+                
             }
             
+           
+            System.out.println("Thread calisiyor!");
             try {
-                   Thread.sleep(200 * AsansorSistemi.ZAMAN_CARPANI);
+                Thread.sleep(1);
             } catch (InterruptedException ex) {
-                Logger.getLogger(Asansor.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Asansor dongu thread hatasi!");
             }
+            
+            
+
         }
- }
+    }
 
     //Kuyrugun en basindaki tek bir grubu alıp asansöre ekler.
     public synchronized void asansoreYolcuAl(LinkedBlockingQueue kuyruk, Asansor asansor) {
         //Kuyrukta Kişi varsa asansöre yolcu alabiliriz.
-        if(kuyruk.size() <= 0){
-                return;
-            
+        if (kuyruk.size() <= 0) {
+            return;
+
         }
-        while (asansor.mevcutKisiSayisi < Asansor.MAKSIMUM_KAPASITE) {   
-          
-            
+        while (asansor.mevcutKisiSayisi < Asansor.MAKSIMUM_KAPASITE) {
+            if (kuyruk.size() <= 0) {
+                return;
+
+            }
             if (AsansorSistemi.kuyruktakiKisiSayisi(kuyruk) > 0) {
                 Grup kuyrugunBasindaki = (Grup) kuyruk.peek();
                 int bosYer = Asansor.MAKSIMUM_KAPASITE - asansor.mevcutKisiSayisi;
@@ -102,6 +122,7 @@ public class Asansor implements Runnable {
                 }
             }
         }
+
     }
 
     public synchronized void asansordenYolcuIndir(List<Grup> liste, Asansor asansor) {
@@ -153,22 +174,21 @@ public class Asansor implements Runnable {
 
     //Bir seferlik sonraki hedefi belirledi.
     public synchronized void asansorHedefBelirle() {
-        if(this.mevcutKisiSayisi > 0){
+        if (this.mevcutKisiSayisi > 0) {
             int hedef = this.hedefKat;
-            
-            
+
             kattanBuyukEnKucuk();
             kattanKucukEnBuyuk();
-            
+
             //System.out.println("Hedef :::::::: +" + hedef);
-        }else{
+        } else {
             this.hedefKat = 0;
             this.yon = "asagi";
         }
     }
 
     public synchronized void kattanBuyukEnKucuk() {
-        if (this.iceridekiler.size() > 0 ) {
+        if (this.iceridekiler.size() > 0) {
             int enKucuk = this.iceridekiler.get(0).hedefKat;
             for (Grup g : this.iceridekiler) {
                 if (enKucuk >= g.hedefKat) {
@@ -184,7 +204,7 @@ public class Asansor implements Runnable {
                 //Asagi dogru gitmesi gerek yukarda bir hedef yok
                 this.yon = "asagi";
             }
-        }else{
+        } else {
             this.yon = "asagi";
             this.hedefKat = 0;
             return;
@@ -192,7 +212,7 @@ public class Asansor implements Runnable {
     }
 
     public synchronized void kattanKucukEnBuyuk() {
-        if (this.iceridekiler.size() > 0 ) {
+        if (this.iceridekiler.size() > 0) {
             int enBuyuk = this.iceridekiler.get(0).hedefKat;
             for (Grup g : this.iceridekiler) {
                 if (enBuyuk <= g.hedefKat) {
@@ -210,7 +230,7 @@ public class Asansor implements Runnable {
                 //Asagi dogru gitmesi gerek yukarda bir hedef yok
                 this.yon = "yukari";
             }
-        }else{
+        } else {
             this.yon = "asagi";
             this.hedefKat = 0;
             return;
@@ -220,14 +240,14 @@ public class Asansor implements Runnable {
     public synchronized void asansoreYolcuAl() {
         if (this.mevcutKat == 0) {
             asansoreYolcuAl(Avm.zeminKatKuyruk, this);
-        } else if (this.mevcutKat == 1) {
-            //asansoreYolcuAl(Avm.birinciKatKuyruk, this);
-        } else if (this.mevcutKat == 2) {
-            //asansoreYolcuAl(Avm.ikinciKatKuyruk, this);
-        } else if (this.mevcutKat == 3) {
-            //asansoreYolcuAl(Avm.ucuncuKatKuyruk, this);
+        } else if (this.mevcutKat == 1 && yon == "asagi") {
+            asansoreYolcuAl(Avm.birinciKatKuyruk, this);
+        } else if (this.mevcutKat == 2 && yon == "asagi") {
+            asansoreYolcuAl(Avm.ikinciKatKuyruk, this);
+        } else if (this.mevcutKat == 3 && yon == "asagi") {
+            asansoreYolcuAl(Avm.ucuncuKatKuyruk, this);
         } else if (this.mevcutKat == 4) {
-            //asansoreYolcuAl(Avm.dorduncuKatKuyruk, this);
+            asansoreYolcuAl(Avm.dorduncuKatKuyruk, this);
         }
     }
 

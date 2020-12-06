@@ -27,7 +27,7 @@ public class AvmCikis implements Runnable {
             try {
                 Thread.sleep(ZAMAN_ARALIGI * AsansorSistemi.ZAMAN_CARPANI);
             } catch (InterruptedException ex) {
-
+                System.out.println("Avm Çıkış Thread hatası!");
             }
         }
 
