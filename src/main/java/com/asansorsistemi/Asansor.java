@@ -28,7 +28,7 @@ public class Asansor implements Runnable {
         this.aktif = false;
         this.mod = "beklemede";
         this.mevcutKat = 0;
-        this.hedefKat = -1;
+        this.hedefKat = 0;
         this.yon = "yukari";
         this.mevcutKisiSayisi = 0;
         this.iceridekiler = Collections.synchronizedList(new ArrayList<Grup>());
@@ -160,7 +160,7 @@ public class Asansor implements Runnable {
             kattanBuyukEnKucuk();
             kattanKucukEnBuyuk();
             
-            System.out.println("Hedef :::::::: +" + hedef);
+            //System.out.println("Hedef :::::::: +" + hedef);
         }else{
             this.hedefKat = 0;
             this.yon = "asagi";
@@ -168,7 +168,7 @@ public class Asansor implements Runnable {
     }
 
     public synchronized void kattanBuyukEnKucuk() {
-        if (this.iceridekiler.size() > 0) {
+        if (this.iceridekiler.size() > 0 ) {
             int enKucuk = this.iceridekiler.get(0).hedefKat;
             for (Grup g : this.iceridekiler) {
                 if (enKucuk >= g.hedefKat) {
@@ -192,7 +192,7 @@ public class Asansor implements Runnable {
     }
 
     public synchronized void kattanKucukEnBuyuk() {
-        if (this.iceridekiler.size() > 0) {
+        if (this.iceridekiler.size() > 0 ) {
             int enBuyuk = this.iceridekiler.get(0).hedefKat;
             for (Grup g : this.iceridekiler) {
                 if (enBuyuk <= g.hedefKat) {
@@ -221,13 +221,13 @@ public class Asansor implements Runnable {
         if (this.mevcutKat == 0) {
             asansoreYolcuAl(Avm.zeminKatKuyruk, this);
         } else if (this.mevcutKat == 1) {
-            asansoreYolcuAl(Avm.birinciKatKuyruk, this);
+            //asansoreYolcuAl(Avm.birinciKatKuyruk, this);
         } else if (this.mevcutKat == 2) {
-            asansoreYolcuAl(Avm.ikinciKatKuyruk, this);
+            //asansoreYolcuAl(Avm.ikinciKatKuyruk, this);
         } else if (this.mevcutKat == 3) {
-            asansoreYolcuAl(Avm.ucuncuKatKuyruk, this);
+            //asansoreYolcuAl(Avm.ucuncuKatKuyruk, this);
         } else if (this.mevcutKat == 4) {
-            asansoreYolcuAl(Avm.dorduncuKatKuyruk, this);
+            //asansoreYolcuAl(Avm.dorduncuKatKuyruk, this);
         }
     }
 

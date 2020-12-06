@@ -5,8 +5,6 @@
  */
 package com.asansorsistemi;
 
-import static com.asansorsistemi.AsansorSistemi.asansor1Thread;
-import static com.asansorsistemi.AsansorSistemi.avmGirisThread;
 import static com.asansorsistemi.AsansorSistemi.testArayuzThread;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -64,12 +62,21 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
         kuyruk2bilgi = new javax.swing.JTextField();
         kuyruk3bilgi = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        asansor1iceridekiler = new javax.swing.JTextField();
+        asansor5Iceridekiler = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         cikisYapanlar = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         asansor1 = new javax.swing.JTextArea();
         baslat = new javax.swing.JButton();
+        asansor1Iceridekiler = new javax.swing.JTextField();
+        asansor2Iceridekiler = new javax.swing.JTextField();
+        asansor3Iceridekiler = new javax.swing.JTextField();
+        asansor4Iceridekiler = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
 
         setLayout(null);
 
@@ -95,11 +102,11 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
 
         jLabel6.setText("Toplam");
         add(jLabel6);
-        jLabel6.setBounds(120, 20, 60, 16);
+        jLabel6.setBounds(110, 10, 80, 16);
 
         jLabel7.setText("Kuyruk");
         add(jLabel7);
-        jLabel7.setBounds(220, 20, 41, 16);
+        jLabel7.setBounds(200, 10, 70, 16);
 
         kat0Kuyruk.setText("jTextField1");
         add(kat0Kuyruk);
@@ -144,51 +151,56 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
 
         jLabel8.setText("0.kat");
         add(jLabel8);
-        jLabel8.setBounds(60, 590, 28, 16);
+        jLabel8.setBounds(50, 410, 40, 16);
 
         jLabel9.setText("1.kat");
         add(jLabel9);
-        jLabel9.setBounds(60, 620, 28, 16);
+        jLabel9.setBounds(50, 440, 40, 16);
 
         jLabel10.setText("2.kat");
         add(jLabel10);
-        jLabel10.setBounds(60, 650, 28, 16);
+        jLabel10.setBounds(50, 470, 40, 16);
 
         jLabel11.setText("3.kat");
         add(jLabel11);
-        jLabel11.setBounds(60, 680, 28, 16);
+        jLabel11.setBounds(50, 500, 40, 16);
 
         jLabel12.setText("4.kat");
         add(jLabel12);
-        jLabel12.setBounds(60, 710, 28, 16);
+        jLabel12.setBounds(50, 530, 40, 16);
 
         kuyruk4bilgi.setText("jTextField10");
         add(kuyruk4bilgi);
-        kuyruk4bilgi.setBounds(100, 710, 960, 24);
+        kuyruk4bilgi.setBounds(110, 530, 960, 24);
 
         kuyruk0bilgi.setText("jTextField10");
         add(kuyruk0bilgi);
-        kuyruk0bilgi.setBounds(100, 590, 960, 24);
+        kuyruk0bilgi.setBounds(110, 410, 960, 24);
 
         kuyruk1bilgi.setText("jTextField10");
         add(kuyruk1bilgi);
-        kuyruk1bilgi.setBounds(100, 620, 960, 24);
+        kuyruk1bilgi.setBounds(110, 440, 960, 24);
 
         kuyruk2bilgi.setText("jTextField10");
         add(kuyruk2bilgi);
-        kuyruk2bilgi.setBounds(100, 650, 960, 24);
+        kuyruk2bilgi.setBounds(110, 470, 960, 24);
 
         kuyruk3bilgi.setText("jTextField10");
         add(kuyruk3bilgi);
-        kuyruk3bilgi.setBounds(100, 680, 960, 24);
+        kuyruk3bilgi.setBounds(110, 500, 960, 24);
 
         jLabel13.setText("Asansor 1");
         add(jLabel13);
-        jLabel13.setBounds(50, 230, 58, 16);
+        jLabel13.setBounds(290, 10, 230, 16);
 
-        asansor1iceridekiler.setText("jTextField16");
-        add(asansor1iceridekiler);
-        asansor1iceridekiler.setBounds(110, 420, 960, 24);
+        asansor5Iceridekiler.setText("jTextField16");
+        asansor5Iceridekiler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                asansor5IceridekilerActionPerformed(evt);
+            }
+        });
+        add(asansor5Iceridekiler);
+        asansor5Iceridekiler.setBounds(110, 360, 960, 24);
 
         jLabel14.setText("Çıkanlar");
         add(jLabel14);
@@ -203,7 +215,7 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
         jScrollPane2.setViewportView(asansor1);
 
         add(jScrollPane2);
-        jScrollPane2.setBounds(50, 260, 390, 140);
+        jScrollPane2.setBounds(290, 40, 230, 170);
 
         baslat.setText("Başlat");
         baslat.addActionListener(new java.awt.event.ActionListener() {
@@ -212,7 +224,58 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
             }
         });
         add(baslat);
-        baslat.setBounds(340, 40, 66, 32);
+        baslat.setBounds(410, 650, 100, 32);
+
+        asansor1Iceridekiler.setText("jTextField16");
+        add(asansor1Iceridekiler);
+        asansor1Iceridekiler.setBounds(110, 240, 960, 24);
+
+        asansor2Iceridekiler.setText("jTextField16");
+        asansor2Iceridekiler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                asansor2IceridekilerActionPerformed(evt);
+            }
+        });
+        add(asansor2Iceridekiler);
+        asansor2Iceridekiler.setBounds(110, 270, 960, 24);
+
+        asansor3Iceridekiler.setText("jTextField16");
+        asansor3Iceridekiler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                asansor3IceridekilerActionPerformed(evt);
+            }
+        });
+        add(asansor3Iceridekiler);
+        asansor3Iceridekiler.setBounds(110, 300, 960, 24);
+
+        asansor4Iceridekiler.setText("jTextField16");
+        asansor4Iceridekiler.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                asansor4IceridekilerActionPerformed(evt);
+            }
+        });
+        add(asansor4Iceridekiler);
+        asansor4Iceridekiler.setBounds(110, 330, 960, 24);
+
+        jLabel15.setText("Asansor 5");
+        add(jLabel15);
+        jLabel15.setBounds(40, 360, 70, 30);
+
+        jLabel16.setText("Asansor 1");
+        add(jLabel16);
+        jLabel16.setBounds(38, 240, 70, 30);
+
+        jLabel17.setText("Asansor 2");
+        add(jLabel17);
+        jLabel17.setBounds(40, 270, 70, 30);
+
+        jLabel18.setText("Asansor 3");
+        add(jLabel18);
+        jLabel18.setBounds(40, 300, 70, 30);
+
+        jLabel19.setText("Asansor 4");
+        add(jLabel19);
+        jLabel19.setBounds(40, 330, 70, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void kat1ToplamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kat1ToplamActionPerformed
@@ -221,14 +284,35 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
 
     private void baslatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_baslatActionPerformed
         // TODO add your handling code here:
-        avmGirisThread.start();
-        asansor1Thread.start();
+        AsansorSistemi.avmGirisThread.start();
+        AsansorSistemi.avmCikisThread.start();
+        AsansorSistemi.asansor1Thread.start();
     }//GEN-LAST:event_baslatActionPerformed
+
+    private void asansor5IceridekilerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asansor5IceridekilerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asansor5IceridekilerActionPerformed
+
+    private void asansor2IceridekilerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asansor2IceridekilerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asansor2IceridekilerActionPerformed
+
+    private void asansor3IceridekilerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asansor3IceridekilerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asansor3IceridekilerActionPerformed
+
+    private void asansor4IceridekilerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asansor4IceridekilerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_asansor4IceridekilerActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea asansor1;
-    private javax.swing.JTextField asansor1iceridekiler;
+    private javax.swing.JTextField asansor1Iceridekiler;
+    private javax.swing.JTextField asansor2Iceridekiler;
+    private javax.swing.JTextField asansor3Iceridekiler;
+    private javax.swing.JTextField asansor4Iceridekiler;
+    private javax.swing.JTextField asansor5Iceridekiler;
     private javax.swing.JButton baslat;
     private javax.swing.JTextField cikisYapanlar;
     private javax.swing.JLabel jLabel1;
@@ -237,6 +321,11 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -289,10 +378,13 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
         kat4Toplam.setText(Integer.toString(AsansorSistemi.ListedekiKisiSayisi(Avm.dorduncuKatListe)));
         
         asansor1.setText(arayuzAsansorYazdir(AsansorSistemi.asansor1));
-        asansor1iceridekiler.setText(arayuzAsansorIcindekiler(AsansorSistemi.asansor1.iceridekiler));
+        asansor1Iceridekiler.setText(arayuzAsansorIcindekiler(AsansorSistemi.asansor1.iceridekiler));
         
         kuyruk0bilgi.setText(arayuzkuyrukBilgisi(Avm.zeminKatKuyruk));
-        
+        kuyruk1bilgi.setText(arayuzkuyrukBilgisi(Avm.birinciKatKuyruk));
+        kuyruk2bilgi.setText(arayuzkuyrukBilgisi(Avm.ikinciKatKuyruk));
+        kuyruk3bilgi.setText(arayuzkuyrukBilgisi(Avm.ucuncuKatKuyruk));
+        kuyruk4bilgi.setText(arayuzkuyrukBilgisi(Avm.dorduncuKatKuyruk));
         
     }
     

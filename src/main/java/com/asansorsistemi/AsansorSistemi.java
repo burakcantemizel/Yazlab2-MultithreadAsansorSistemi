@@ -14,6 +14,9 @@ public class AsansorSistemi {
 
     static AvmGiris avmGiris;
     static Thread avmGirisThread;
+    
+    static AvmCikis avmCikis;
+    static Thread avmCikisThread;
 
     static Asansor asansor1;
     static Thread asansor1Thread;
@@ -26,6 +29,9 @@ public class AsansorSistemi {
 
         avmGiris = new AvmGiris();
         avmGirisThread = new Thread(avmGiris);
+        
+        avmCikis = new AvmCikis();
+        avmCikisThread = new Thread(avmCikis);
 
         asansor1 = new Asansor(1);
         asansor1Thread = new Thread(asansor1);
@@ -43,7 +49,9 @@ public class AsansorSistemi {
         
         //EntryPoint ==>>>
         avmGirisThread.setPriority(1);
-        asansor1Thread.setPriority(2);
+        avmCikisThread.setPriority(2);
+        asansor1Thread.setPriority(3);
+        
         testArayuzThread.setPriority(10);
         
 
