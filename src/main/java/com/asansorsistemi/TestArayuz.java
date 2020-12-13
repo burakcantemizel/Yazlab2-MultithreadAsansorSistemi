@@ -214,7 +214,7 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("Asansor 1");
         add(jLabel13);
-        jLabel13.setBounds(250, 20, 180, 16);
+        jLabel13.setBounds(250, 20, 170, 16);
 
         asansor5Iceridekiler.setText("jTextField16");
         asansor5Iceridekiler.addActionListener(new java.awt.event.ActionListener() {
@@ -310,7 +310,7 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("Asansor 2");
         add(jLabel20);
-        jLabel20.setBounds(440, 20, 180, 16);
+        jLabel20.setBounds(440, 20, 170, 16);
 
         asansor2.setColumns(20);
         asansor2.setLineWrap(true);
@@ -323,7 +323,7 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("Asansor 3");
         add(jLabel21);
-        jLabel21.setBounds(630, 20, 180, 16);
+        jLabel21.setBounds(630, 20, 170, 16);
 
         asansor3.setColumns(20);
         asansor3.setLineWrap(true);
@@ -344,7 +344,7 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("Asansor 4");
         add(jLabel22);
-        jLabel22.setBounds(820, 20, 180, 16);
+        jLabel22.setBounds(820, 20, 170, 16);
 
         asansor5.setColumns(20);
         asansor5.setLineWrap(true);
@@ -357,7 +357,7 @@ public class TestArayuz extends javax.swing.JPanel implements Runnable {
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel23.setText("Asansor 5");
         add(jLabel23);
-        jLabel23.setBounds(1010, 20, 180, 16);
+        jLabel23.setBounds(1010, 20, 170, 16);
 
         jTextArea1.setColumns(20);
         jTextArea1.setForeground(new java.awt.Color(255, 102, 102));
