@@ -1,5 +1,6 @@
 package com.asansorsistemi;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -8,7 +9,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import javax.swing.JFrame;
 
 public class AsansorSistemi {
-    static int ZAMAN_CARPANI = 4;
+    static int ZAMAN_CARPANI = 1;
    
     static Avm avm;
 
@@ -61,15 +62,18 @@ public class AsansorSistemi {
         testArayuz = new TestArayuz();
         testArayuzThread = new Thread(testArayuz);
         
-        JFrame pencere = new JFrame();
+        
+        
+        JFrame pencere = new JFrame("Multithread Asansör Sistemi");
         pencere.setVisible(true);
         pencere.add(testArayuz);
-        pencere.setSize(1280, 900);  
+        pencere.setSize(1200, 720);  
+        pencere.setResizable(false);
         pencere.setLocationRelativeTo(null);  
         pencere.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         
-        //EntryPoint ==>>>
+        //Threadlerin çalışma öncelikleri
         avmGirisThread.setPriority(1);
         avmCikisThread.setPriority(2);
         kontrolThread.setPriority(3);
@@ -86,9 +90,12 @@ public class AsansorSistemi {
     }
 
     public static void main(String[] args) {
+        FlatDarculaLaf.install(); // FlatLaf Look And Feelini Kuruyoruz.
         AsansorSistemi asansorSistemi = new AsansorSistemi();
     }
 
+    
+    //Kuyruktaki ve listedeki kişi sayılarını veren yardımcı fonksiyonlar
     public static synchronized int kuyruktakiKisiSayisi(LinkedBlockingQueue<Grup> kuyruk) {
         if (kuyruk.size() > 0) {
             int toplamKisi = 0;
