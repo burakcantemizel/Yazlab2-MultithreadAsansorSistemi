@@ -1,10 +1,7 @@
 package com.asansorsistemi;
 
 import com.formdev.flatlaf.FlatDarculaLaf;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.LinkedBlockingQueue;
 import javax.swing.JFrame;
 
@@ -118,7 +115,6 @@ public class AsansorSistemi {
         } else {
             return 0;
         }
-
     }
     
      

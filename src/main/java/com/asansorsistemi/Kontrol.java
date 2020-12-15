@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 //durumuna bakmak için yeni bir müşteri gelmesini değerlendiriyor.
 public class Kontrol implements Runnable {
 
-    public static final int OLU_ZAMAN = 500 * AsansorSistemi.ZAMAN_CARPANI;
+    public static final int OLU_ZAMAN = AvmGiris.ZAMAN_ARALIGI * AsansorSistemi.ZAMAN_CARPANI;
 
     
     //Kontrol threadi ana döngüsü

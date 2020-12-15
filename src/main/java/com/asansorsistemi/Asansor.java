@@ -41,12 +41,11 @@ public class Asansor implements Runnable {
         }
     }
 
-    
     //Asansörün ana çalışma döngüsü
     @Override
     public void run() {
         while (true) {
-            
+
             if (this.aktif == true || this.mevcutKisiSayisi > 0) {
                 this.mod = "calisiyor";
                 //System.out.println(this.id);
@@ -65,7 +64,7 @@ public class Asansor implements Runnable {
                 } catch (Exception e) {
                     System.out.println("Yolcu binmesinde problem!");
                 }
-                
+
                 //Hedef belirleme
                 asansorHedefBelirle();
 
@@ -83,7 +82,7 @@ public class Asansor implements Runnable {
                 } catch (InterruptedException ex) {
                     System.out.println("Kat atasi gecis thread hatasi!");
                 }
-            }else{
+            } else {
                 //Asansör hareket etmiyor
                 this.mod = "beklemede";
                 try {
@@ -102,22 +101,21 @@ public class Asansor implements Runnable {
             return;
 
         }
-        
-        
+
         while (asansor.mevcutKisiSayisi < Asansor.MAKSIMUM_KAPASITE) {
             if (kuyruk.size() <= 0) {
                 return;
 
             }
             //Asansör dolana kadar yolcu alabiliriz ama kuyrukta kişi biterse duruyoruz
-            
+
             if (AsansorSistemi.kuyruktakiKisiSayisi(kuyruk) > 0) {
                 //Baştaki grubu aldık
                 Grup kuyrugunBasindaki = (Grup) kuyruk.peek();
-                
+
                 //Boşyeri hesapladık
                 int bosYer = Asansor.MAKSIMUM_KAPASITE - asansor.mevcutKisiSayisi;
-                
+
                 //Eğer gruptan fazla boş yer varsa direkt ekleme yapıcaz.
                 if (bosYer >= kuyrugunBasindaki.kisiSayisi) {
                     asansor.iceridekiler.add(kuyrugunBasindaki); //Burda direkt olarak grup alındı.
@@ -142,7 +140,7 @@ public class Asansor implements Runnable {
         if (this.iceridekiler.size() > 0) {
             Iterator<Grup> it = this.iceridekiler.iterator();
             //Iterator objesiyle içerdeki kişileri geziyoruz thread exceptiondan kaçınmak için
-            
+
             while (it.hasNext()) {
                 Grup g = it.next();
                 if (g.hedefKat == mevcutKat) {
@@ -152,7 +150,7 @@ public class Asansor implements Runnable {
                     this.mevcutKisiSayisi -= g.kisiSayisi;
                     //this.iceridekiler.remove(g);
                     it.remove();
-                    
+
                 }
 
             }
@@ -194,32 +192,29 @@ public class Asansor implements Runnable {
 
     //Bir seferlik sonraki hedefi belirledi.
     public synchronized void asansorHedefBelirle() {
-        if (this.mevcutKisiSayisi > 0) {
-            int hedef = this.hedefKat;
+        //if (this.mevcutKisiSayisi > 0) {
 
-            //****************************************
-            //Asansör hedef belirleme mantığı gerçek avm asansörlerindeki gibidir.
-            //Örnek olarak açıklanması gerekirse
-            //Sistem önce içerdeki yolculara bakar ve en küçükten başlayarak onları katlara bırakır.
-            //İçerdei yolcular bırakıldıktan sonra yön yukarı doğru olduğu için üst katlarda inmek isteyen var mı diye bakar
-            //Eğer inmek isteyen insan var ise yukarı doğru devam eder ve onları da alır yok ise alttaki katlara bakmaya başlar
-            //Yön aşağı olduğu için aşağı doğru yolcu alarak hedef kata devam eder
-            //Bu çalışma mantığıyla çalışır.
-            //****************************************
-            
-            
-            kattanBuyukEnKucuk();
-            kattanKucukEnBuyuk();
 
-            //System.out.println("Hedef :::::::: +" + hedef);
-        } else {
-            this.hedefKat = 0;
-            this.yon = "asagi";
-        }
-    }
+        //****************************************
+        //Asansör hedef belirleme mantığı gerçek avm asansörlerindeki gibidir.
+        //Örnek olarak açıklanması gerekirse
+        //Sistem önce içerdeki yolculara bakar ve en küçükten başlayarak onları katlara bırakır.
+        //İçerdei yolcular bırakıldıktan sonra yön yukarı doğru olduğu için üst katlarda inmek isteyen var mı diye bakar
+        //Eğer inmek isteyen insan var ise yukarı doğru devam eder ve onları da alır yok ise alttaki katlara bakmaya başlar
+        //Yön aşağı olduğu için aşağı doğru yolcu alarak hedef kata devam eder
+        //Bu çalışma mantığıyla çalışır.
+        //****************************************
+        //kattanBuyukEnKucuk();
+        //kattanKucukEnBuyuk();
 
-    //Yukarı yönlü hedef belirleme fonksiyonu
-    public synchronized void kattanBuyukEnKucuk() {
+        //System.out.println("Hedef :::::::: +" + hedef);
+        //} else {
+        //    this.hedefKat = 0;
+        //    this.yon = "asagi";
+        //}
+        
+        
+        
         if (this.iceridekiler.size() > 0) {
             int enKucuk = this.iceridekiler.get(0).hedefKat;
             for (Grup g : this.iceridekiler) {
@@ -227,66 +222,61 @@ public class Asansor implements Runnable {
                     enKucuk = g.hedefKat;
                 }
             }
-
-            if (enKucuk > mevcutKat) {
+            
+             if (enKucuk > mevcutKat) {
                 this.yon = "yukari";
                 this.hedefKat = enKucuk;
                 
-                
-                //Asagi dogru gitmesi gerek yukarda bir hedef yok
-                //Asagi gitmeden once yukaridaki yolculari alacagiz
-                if(this.mevcutKat < 4 && Avm.dorduncuKatKuyruk.size() > 0){
+            }else{
+                if (this.yon == "yukari" && this.mevcutKat < 4 && Avm.dorduncuKatKuyruk.size() > 0) {
+                    this.yon = "yukari";
                     this.hedefKat = 4;
-                }else if(this.mevcutKat < 3 && Avm.ucuncuKatKuyruk.size() > 0){
+                } else if (this.yon == "yukari" && this.mevcutKat < 3 && Avm.ucuncuKatKuyruk.size() > 0) {
+                    this.yon = "yukari";
                     this.hedefKat = 3;
-                }else if(this.mevcutKat < 2 && Avm.ikinciKatKuyruk.size() > 0){
+                } else if (this.yon == "yukari" && this.mevcutKat < 2 && Avm.ikinciKatKuyruk.size() > 0) {
+                    this.yon = "yukari";
                     this.hedefKat = 2;
-                }else if(this.mevcutKat < 1 && Avm.birinciKatKuyruk.size() > 0){
+                } else if (this.yon == "yukari" && this.mevcutKat < 1 && Avm.birinciKatKuyruk.size() > 0) {
+                    this.yon = "yukari";
                     this.hedefKat = 1;
-                }else{
-                   
-                }
-                
-                return;
-            } else {
-                
-
-                 this.yon = "asagi";
-            }
-        } else {
-            this.yon = "asagi";
-            this.hedefKat = 0;
-            return;
-        }
-    }
-
-    //Aşağı yönlü hedef belirleme fonksiyonu
-    public synchronized void kattanKucukEnBuyuk() {
-        if (this.iceridekiler.size() > 0) {
-            int enBuyuk = this.iceridekiler.get(0).hedefKat;
-            for (Grup g : this.iceridekiler) {
-                if (enBuyuk <= g.hedefKat) {
-                    enBuyuk = g.hedefKat;
+                } else {
+                    this.yon = "asagi";
+                    this.hedefKat = 0;
                 }
             }
-
-            if (enBuyuk < mevcutKat) {
-                //Yukarıda bir hedef
-                //Yukari dogru hedef belirlicem
-                this.yon = "asagi";
-                this.hedefKat = enBuyuk;
-                return;
-            } else {
-                //Asagi dogru gitmesi gerek yukarda bir hedef yok
-                this.yon = "yukari";
-            }
-        } else {
-            this.yon = "asagi";
-            this.hedefKat = 0;
-            return;
+        }else{
+            if (this.yon == "yukari" && this.mevcutKat < 4 && Avm.dorduncuKatKuyruk.size() > 0) {
+                    this.yon = "yukari";
+                    this.hedefKat = 4;
+                } else if (this.yon == "yukari" && this.mevcutKat < 3 && Avm.ucuncuKatKuyruk.size() > 0) {
+                    this.yon = "yukari";
+                    this.hedefKat = 3;
+                } else if (this.yon == "yukari" && this.mevcutKat < 2 && Avm.ikinciKatKuyruk.size() > 0) {
+                    this.yon = "yukari";
+                    this.hedefKat = 2;
+                } else if (this.yon == "yukari" && this.mevcutKat < 1 && Avm.birinciKatKuyruk.size() > 0) {
+                    this.yon = "yukari";
+                    this.hedefKat = 1;
+                } else {
+                    this.yon = "asagi";
+                    this.hedefKat = 0;
+                }
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
 
+    
+    
     //Asansöre yolcu alan üst metod asansöre yolcu al metoduna ilgili kuyruk
     //nesnelerini gönderiyor.
     public synchronized void asansoreYolcuAl() {

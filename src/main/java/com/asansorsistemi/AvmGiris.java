@@ -1,17 +1,16 @@
 package com.asansorsistemi;
 
-import java.util.Queue;
+
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 
 //Avm Giris Threadi zemin kat kuyruguna rastgele insanlar ekliyor.
 public class AvmGiris implements Runnable {
     Random random;
     
-    private static final int ZAMAN_ARALIGI = 500;  
+    public static final int ZAMAN_ARALIGI = 500;  
     
     public AvmGiris(){
         random = new Random();

@@ -1,13 +1,11 @@
 package com.asansorsistemi;
 
-import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 //Belli bir sürede rastgele bir kattan rastgele kişiyi o katın çıkış kuyruğuna ekliyor.

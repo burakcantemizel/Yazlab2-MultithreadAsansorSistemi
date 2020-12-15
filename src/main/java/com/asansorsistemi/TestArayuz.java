@@ -1,10 +1,8 @@
 package com.asansorsistemi;
 
-import static com.asansorsistemi.AsansorSistemi.testArayuzThread;
+
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 //Bu sınıf netbeansin form editörü tarafından oto generate edilmiş bazı kısımlar
 //içermektedir.
