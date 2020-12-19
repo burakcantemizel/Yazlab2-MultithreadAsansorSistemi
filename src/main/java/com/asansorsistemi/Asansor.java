@@ -60,7 +60,7 @@ public class Asansor implements Runnable {
 
                 //Yolcu alma işlemi
                 try {
-                    asansoreYolcuAl(); //Asansöre binildi.
+                    if(this.aktif == true)asansoreYolcuAl(); //Asansöre binildi.
                 } catch (Exception e) {
                     System.out.println("Yolcu binmesinde problem!");
                 }

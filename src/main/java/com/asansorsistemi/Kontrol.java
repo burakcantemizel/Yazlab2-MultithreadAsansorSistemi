@@ -22,9 +22,11 @@ public class Kontrol implements Runnable {
         //Aktif asansör sayısı 1'den başlıyor.
         int aktifAsansorler = 1;
         
+        boolean degisimOldu = false;
         
         while (true) {
             //Kontrol hep çalışıyor
+        	degisimOldu = false;
             int toplamKuyruk = 0;
 
             //Toplam kuyruk sayısını hesaplıyoruz.
@@ -39,26 +41,31 @@ public class Kontrol implements Runnable {
             //20den fazla ise bir asansörü açıyoruz
             if (toplamKuyruk > 20) {
                 aktifAsansorler++;
+                degisimOldu = true;
             }
 
             //10'dan az ise bir asansörü kapatıyoruz.
             if (toplamKuyruk < 10) {
                 aktifAsansorler--;
+                degisimOldu = true;
             }
 
             //Aktif asansör en az 1 olmalı
-            if (aktifAsansorler <= 1) {
+            if (aktifAsansorler < 1) {
                 aktifAsansorler = 1;
+                //Sınıra gelmiş demek ki degisim olmamış
+                degisimOldu = false;
             }
 
             //Aktif asansör en çok 5 olmalı
-            if (aktifAsansorler >= 5) {
+            if (aktifAsansorler > 5) {
                 aktifAsansorler = 5;
+                degisimOldu = false;
             }
 
             
             //Aktif asansör numarasına göre asansörlerin aktiflik durumlarını ayarlıyoruz.
-            if (aktifAsansorler == 1) {
+            if (aktifAsansorler == 1 && degisimOldu) {
                 AsansorSistemi.asansor2.aktif = false;
                 AsansorSistemi.asansor3.aktif = false;
                 AsansorSistemi.asansor4.aktif = false;
@@ -69,7 +76,7 @@ public class Kontrol implements Runnable {
                 } catch (InterruptedException ex) {
                     System.out.println("Aktif asansor 1 thread hatasi!");
                 }
-            } else if (aktifAsansorler == 2) {
+            } else if (aktifAsansorler == 2 && degisimOldu) {
                 AsansorSistemi.asansor2.aktif = true;
                 AsansorSistemi.asansor3.aktif = false;
                 AsansorSistemi.asansor4.aktif = false;
@@ -81,7 +88,7 @@ public class Kontrol implements Runnable {
                      System.out.println("Aktif asansor 2 thread hatasi!");
                 }
 
-            } else if (aktifAsansorler == 3) {
+            } else if (aktifAsansorler == 3 && degisimOldu) {
                 AsansorSistemi.asansor2.aktif = true;
                 AsansorSistemi.asansor3.aktif = true;
                 AsansorSistemi.asansor4.aktif = false;
@@ -92,7 +99,7 @@ public class Kontrol implements Runnable {
                 } catch (InterruptedException ex) {
                      System.out.println("Aktif asansor 3 thread hatasi!");
                 }
-            } else if (aktifAsansorler == 4) {
+            } else if (aktifAsansorler == 4 && degisimOldu) {
                 AsansorSistemi.asansor2.aktif = true;
                 AsansorSistemi.asansor3.aktif = true;
                 AsansorSistemi.asansor4.aktif = true;
@@ -104,7 +111,7 @@ public class Kontrol implements Runnable {
                      System.out.println("Aktif asansor 4 thread hatasi!");
                 }
 
-            } else if (aktifAsansorler == 5) {
+            } else if (aktifAsansorler == 5 && degisimOldu) {
                 AsansorSistemi.asansor2.aktif = true;
                 AsansorSistemi.asansor3.aktif = true;
                 AsansorSistemi.asansor4.aktif = true;
@@ -116,12 +123,14 @@ public class Kontrol implements Runnable {
                      System.out.println("Aktif asansor 5 thread hatasi!");
                 }
             }
-
+            
+            /*
             try {
-                Thread.sleep(10);
+                Thread.sleep(1); // 10 ms ile kontrol etsin
             } catch (InterruptedException ex) {
                 System.out.println("Kontrol thread hatasi!");
             }
+            */
 
         }
     }
